@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{user/base :: layout(~{:: section})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <section>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-auto mt-5">
+                     <!-- for invaild input-->
+                    <div th:if="${error}" class="alert alert-danger text-center mt-5">
+                        <span th:text="${error}">Invalid contact reference.</span>
+                    </div>
+                    <form action="" th:action="@{'/user/update-profile'}" method="post" th:object="${user}" enctype="multipart/form-data">
+                       <!-- for so message-->
+                            <div th:if="${session.message}">
+                                <!-- <div th:class="${session.message.type}" class="alert" role="alert">
+                                    <span th:text="${session.message.context}"></span>
+                                </div> -->
+                                <div class="alert text-center" role="alert" th:classappend="${session.message.type}">
+                                    <span th:text="${session.message.context}" ></span>
+                                    <th:block th:text="${@sessionRemoveHelper.removeSession()}"></th:block>
+                                </div>
+                            </div>
+                       
+                        <h1 class="text-center">Edit Profile</h1>
+                        <!--name-->
+                            <div class="input-group pb-2">
+                                <span class="input-group-text">
+                                    <i class="fa-solid fa-user"></i>
+                                </span>
+                                <input name="name" type="text" class="form-control" id="exampleInputEmail1" th:value="${user.name}"
+                                th:classappend="${#fields.hasErrors('name')? 'is-invalid' : ''}" aria-describedby="emailHelp" placeholder="Enter name here">
+
+                                <div id="validationServerUsernameFeedback" class="invalid-feedback" th:each="e : ${#fields.errors('name')}" 
+                                th:text="${e}"></div>
+                            </div> 
+
+                            <div class="input-group pb-2">
+                                <span class="input-group-text">
+                                   <i class="fa-solid fa-envelope"></i>
+                                </span>
+                                <input name="email" type="email" class="form-control" id="exampleInputEmail1" th:value="${user.email}"
+                                th:classappend="${#fields.hasErrors('email')? 'is-invalid' : ''}" aria-describedby="emailHelp" placeholder="Enter email here">
+
+                                <div id="validationServerUsernameFeedback" class="invalid-feedback" th:each="e : ${#fields.errors('email')}" 
+                                th:text="${e}"></div>
+                            </div> 
+
+                            <!-- for user description feild-->
+                            <div class="input-group pb-2">
+                                    <textarea name="about"
+                                        rows="2"
+                                        class="form-control"
+                                        placeholder="Enter about here"
+                                        th:classappend="${#fields.hasErrors('about') ? 'is-invalid' : ''}"
+                                        th:text="${user.about}"></textarea>
+
+                                <div id="validationServerUsernameFeedback" class="invalid-feedback" th:each="e : ${#fields.errors('about')}" th:text="${e}"></div> 
+                            </div>
+                            <!--Image-->
+                            <div class="pb-2">
+                                <label for="file">Choose image</label>
+                                <input name="file" type="file" id="image" class="form-control">
+
+                                <!-- <div class="mt-2 text-center rounded">
+                                    <small class="text-muted">Current Image:</small>
+                                    <div>
+                                        <img th:src="@{'/image/' + ${user.imageUrl}}" alt="Contact Image" width="100px" />
+                                    </div>
+                                </div> -->
+                            </div>
+
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn bg-primary ">Update</button>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

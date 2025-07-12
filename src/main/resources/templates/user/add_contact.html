@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" th:xmlns="http://www.thymeleaf.org" th:replace="~{user/base :: layout(~{:: section})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}"></title>
+</head>
+<body>
+    <section>
+        <div class="container ">
+            <div class="row">
+                <div class="col-12 col-sm-10 col-md-10 col-lg-10 offset-md-1 offset-sm-1 offset-lg-1 ">
+                    <div class="form bg-white mt-5 p-4 pt-2 rounded">
+                        <form action="" th:action="@{'/user/add_contact'}" method="post" th:object="${contact}" enctype="multipart/form-data">
+
+                            <!-- for so message-->
+                            <div th:if="${session.message}">
+                                <!-- <div th:class="${session.message.type}" class="alert" role="alert">
+                                    <span th:text="${session.message.context}"></span>
+                                </div> -->
+                                <div class="alert text-center" role="alert" th:classappend="${session.message.type}">
+                                    <span th:text="${session.message.context}" ></span>
+                                    <th:block th:text="${@sessionRemoveHelper.removeSession()}"></th:block>
+                                </div>
+                            </div>
+
+                            <h1 class="text-center">Add contact</h1>
+                            <!--First name-->
+                            <div class="input-group pb-2">
+                                <span class="input-group-text">
+                                    <i class="fa-solid fa-user"></i>
+                                </span>
+                                <input name="cFirstName" type="text" class="form-control" id="exampleInputEmail1" th:value="${contact.cFirstName}"
+                                th:classappend="${#fields.hasErrors('cFirstName')? 'is-invalid' : ''}" aria-describedby="emailHelp" placeholder="Enter first name here">
+
+                                <div id="validationServerUsernameFeedback" class="invalid-feedback" th:each="e : ${#fields.errors('cFirstName')}" 
+                                th:text="${e}"></div>
+                            </div> 
+
+                            <!-- last name-->
+                              <div class="input-group pb-2">
+                                <span class="input-group-text">
+                                    <i class="fa-solid fa-user"></i>
+                                </span>
+                                <input type="text" name="cSecondName" class="form-control" placeholder="Enter your last name">
+                            </div>
+                             <!-- <div class="form-group">
+                                <label for="exampleInputEmail2">Last Name</label>
+                                <input name="cSecondName" type="text" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp" 
+                                    placeholder="Enter last name here" th:value="${contact.cSecondName}">
+                                
+                            </div> -->
+
+                            <!--email-->
+                             <div class="input-group pb-2">
+                                <span class="input-group-text">
+                                   <i class="fa-solid fa-envelope"></i>
+                                </span>
+                                <input name="email" type="email" class="form-control" id="exampleInputEmail3" aria-describedby="emailHelp" 
+                                    placeholder="Enter email" th:value="${contact.email}">
+                                
+                            </div>
+
+                            <!--work-->
+                              <div class="input-group pb-2">
+                                <span class="input-group-text">
+                                    <i class="fa-solid fa-briefcase"></i>
+                                </span>
+                                <input name="work" type="text" class="form-control" id="exampleInputEmail4" aria-describedby="emailHelp" 
+                                placeholder="Enter work" th:value="${contact.work}">
+                               
+                            </div>
+
+                            <!--number-->
+                              <div class="input-group pb-2">
+                                <span class="input-group-text">
+                                    <i class="fa-solid fa-phone"></i>
+                                </span>
+                                <input name="number" type="number" class="form-control" id="exampleInputEmail5" 
+                                th:classappend="${#fields.hasErrors('number')? 'is-invalid' : ''}" aria-describedby="emailHelp" 
+                                   th:value="${contact.number}" placeholder="Enter number ( 10 digit )">
+                                
+                                <div id="validationServerUsernameFeedback" class="invalid-feedback" th:each="e : ${#fields.errors('number')}" 
+                                th:text="${e}"></div>
+                            </div>
+
+                            <!--image-->
+                             <div class="pb-2">
+                                <label for="file">Choose image</label>
+                                <input name="file" type="file"  id="image" placeholder="Enter email" th:value="${contact.imageUrl}">
+                                
+                            </div>
+
+                             <!-- for user description feild-->
+                            <div class="input-group pb-2">
+                                <textarea th:classappend="${#fields.hasErrors('description')? 'is-invalid' : ''}" 
+                                    placeholder="Enter description here" th:value="${contact.description}" name="description" 
+                                    rows="2" class="form-control"></textarea>
+
+                                <div id="validationServerUsernameFeedback" class="invalid-feedback" th:each="e : ${#fields.errors('description')}" th:text="${e}"></div>
+                                
+                            </div>
+
+                             <!--Submit button-->
+                             <div class="btn d-flex justify-content-center align-item-center">
+                                <button type="submit" class="btn bg-primary mt-1 me-2" >Submit</button>  <!--me-2 for horizontal right side margin -->
+                                <button type="button" class="btn btn-danger mt-1 ms-2"onclick="window.history.back()">Cancle</button>
+                             </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const cancel = document.getElementById("cancle");
+
+        function onBack() {
+
+        }
+    </script>
+</body>
+</html>
